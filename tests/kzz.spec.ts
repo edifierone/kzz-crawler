@@ -25,12 +25,16 @@ test('test', async ({ page, request }) => {
 
   await page.getByPlaceholder('密码').fill(process.env.JSL_SECRET || '');
 
+  const aaa = page.locator('form:has-text("帐号密码登录 忘记密码 记住我 本人已阅读并同意《用户协议》和《隐私政策》 登录") input[type="checkbox"]');
+
+  console.log(3333, aaa);
+
   await page.locator('form:has-text("帐号密码登录 忘记密码 记住我 本人已阅读并同意《用户协议》和《隐私政策》 登录") input[type="checkbox"]').nth(1).check();
 
   await page.getByRole('button', { name: '登录', exact: true }).click();
 
   page.on('response', (response) => {
-    console.log(111111, response);
+    // console.log(111111, response);
     if (response.url().includes('/data/cbnew/cb_list_new')) {
       response.json().then((res) => {
         const records: NewBitableRecords = [];
