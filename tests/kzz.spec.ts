@@ -28,6 +28,7 @@ test('test', async ({ page, request }) => {
   await page.getByRole('button', { name: '登录', exact: true }).click();
 
   page.on('response', (response) => {
+    console.log(111111, response);
     if (response.url().includes('/data/cbnew/cb_list_new')) {
       response.json().then((res) => {
         const records: NewBitableRecords = [];
