@@ -17,28 +17,22 @@ test('test', async ({ page, request }) => {
 
   await page.getByPlaceholder('手机号/用户名').click();
 
-  console.log(4444, page.getByPlaceholder('手机号/用户名'));
-  console.log(5555, await page.getByPlaceholder('手机号/用户名'));
-
   await page.getByPlaceholder('手机号/用户名').fill(process.env.JSL_ACCOUNT || '');
 
   await page.getByPlaceholder('密码').click();
 
   await page.getByPlaceholder('密码').fill(process.env.JSL_SECRET || '');
 
-  const aaa = page.locator('form:has-text("帐号密码登录 忘记密码 记住我 本人已阅读并同意《用户协议》和《隐私政策》 登录") input[type="checkbox"]');
+  await page.locator('form:has-text("帐号密码登录 忘记密码 记住我 本人已阅读并同意《用户协议》和《隐私政策》 登录") input[type="checkbox"]').nth(1).check();
 
-  console.log(3333, aaa.nth(1));
-
-  const bbb = await page.locator('form:has-text("帐号密码登录 忘记密码 记住我 本人已阅读并同意《用户协议》和《隐私政策》 登录") input[type="checkbox"]').nth(1).check();
-
-  console.log(6666, bbb);
   await page.getByRole('button', { name: '登录', exact: true }).click();
 
   page.on('response', (response) => {
     console.log(111111, response.url());
     if (response.url().includes('/data/cbnew/cb_list_new')) {
+      console.log(22222);
       response.json().then((res) => {
+        console.log(333333,res.rows);
         const records: NewBitableRecords = [];
 
         res.rows.forEach((row) => {
