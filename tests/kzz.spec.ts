@@ -27,12 +27,18 @@ test('test', async ({ page, request }) => {
 
   await page.getByRole('button', { name: '登录', exact: true }).click();
 
+  await page.locator('.right-tools tip').nth(0).click();
+  console.log('debug001', page.locator('.right-tools tip').innerHTML());
+
+  await page.locator('tr:has-text("行业") input[type="checkbox"]').nth(0).click();
+  console.log('debug002', page.locator('tr:has-text("行业") input[type="checkbox"]').innerHTML());
+
+  await page.locator('button:has-text("保存")').click();
+  console.log('debug002', page.locator('button:has-text("保存")').innerHTML());
+
   page.on('response', (response) => {
-    // console.log(111111, response.url());
     if (response.url().includes('/data/cbnew/cb_list_new')) {
-      // console.log(22222);
       response.json().then((res) => {
-        // console.log(333333,res.rows);
         const records: NewBitableRecords = [];
 
         res.rows.forEach((row) => {
