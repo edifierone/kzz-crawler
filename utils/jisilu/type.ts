@@ -7,6 +7,8 @@ export interface JisiluRecord {
   sprice: number; // 正股价
   stock_id: string; // 正股代码
   pb: number; // 正股 PB
+  sw_nm_r: string; // 行业
+  profit: number; // 2023净利润
   convert_value: number; // 转股价值
   premium_rt: number; // 转股溢价率
   dblow: number; // 双低值
@@ -29,6 +31,8 @@ export interface BitableRecord {
   '正股名称': string;
   '正股价': number;
   '正股PB': number;
+  '行业': string;
+  '2023净利润': number;
   '转股价值': number;
   '转股溢价率': number;
   '双低': number;
@@ -39,4 +43,5 @@ export interface BitableRecord {
   '到期税前收益': number;
   '到期时间': number; // timestamp
   '债券类型': string;
+  '更新时间': number;
 }

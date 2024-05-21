@@ -38,37 +38,45 @@ export interface IBatchCreateParams extends ICommonParams {
 export async function batchCreate(request: APIRequestContext, params: IBatchCreateParams) {
   const { token, app_token, table_id, records } = params;
   if (!records || records.length === 0) return { msg: 'no records need to create.' };
-  const response = await request.post(
-    `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_create`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      data: {
-        records,
-      },
-    });
-  const json = await response.json();
-  return json;
+  try {
+    const response = await request.post(
+      `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_create`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        data: {
+          records,
+        },
+      });
+    const json = await response.json();
+    return json; 
+  } catch (error) {
+    return { msg: error }
+  }
 }
 
 export async function batchUpdate(request: APIRequestContext, params: IBatchCreateParams) {
   const { token, app_token, table_id, records } = params;
   if (!records || records.length === 0) return { msg: 'no records need to update.' };
-  const response = await request.post(
-    `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_update`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      data: {
-        records,
-      },
-    });
-  const json = await response.json();
-  return json;
+  try {
+    const response = await request.post(
+      `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_update`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        data: {
+          records,
+        },
+      });
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    return { msg: error }
+  }
 }
 
 export interface IBatchDeleteParams extends ICommonParams {
@@ -78,19 +86,23 @@ export interface IBatchDeleteParams extends ICommonParams {
 export async function batchDelete(request: APIRequestContext, params: IBatchDeleteParams) {
   const { token, app_token, table_id, records } = params;
   if (!records || records.length === 0) return { msg: 'no records need to update.' };
-  const response = await request.post(
-    `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_delete`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      data: {
-        records,
-      },
-    });
-  const json = await response.json();
-  return json;
+  try {
+    const response = await request.post(
+      `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_delete`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        data: {
+          records,
+        },
+      });
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    return { msg: error }
+  }
 }
 
 export interface IBatchQueryParams extends ICommonParams {
@@ -219,6 +231,8 @@ export const makeFields = (record: JisiluRecord): BitableRecord => {
     '正股名称': record.stock_nm,
     '正股价': record.sprice,
     '正股PB': record.pb,
+    '行业': record.sw_nm_r,
+    '2023净利润': record.profit,
     '转股价值': record.convert_value,
     '转股溢价率': record.premium_rt / 100,
     '双低': record.dblow,
@@ -229,5 +243,6 @@ export const makeFields = (record: JisiluRecord): BitableRecord => {
     '到期税前收益': record.ytm_rt / 100,
     '到期时间': +new Date(`${record.maturity_dt}`),
     '债券类型': getBondType(record.btype),
+    '更新时间': +new Date(),
   };
 };

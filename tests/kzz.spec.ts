@@ -10,8 +10,6 @@ test('test', async ({ page, request }) => {
   console.log('app_token', process.env.app_token);
   console.log('table_id', process.env.table_id);
 
-  console.log(22222, process.env);
-
   await page.goto('https://www.jisilu.cn/data/cbnew/#cb');
 
   await page.getByRole('button', { name: '登录' }).click();
@@ -25,18 +23,16 @@ test('test', async ({ page, request }) => {
 
   await page.getByPlaceholder('密码').fill(process.env.JSL_SECRET || '');
 
-  const aaa = page.locator('form:has-text("帐号密码登录 忘记密码 记住我 本人已阅读并同意《用户协议》和《隐私政策》 登录") input[type="checkbox"]');
-
-  console.log(3333, aaa);
-
   await page.locator('form:has-text("帐号密码登录 忘记密码 记住我 本人已阅读并同意《用户协议》和《隐私政策》 登录") input[type="checkbox"]').nth(1).check();
 
   await page.getByRole('button', { name: '登录', exact: true }).click();
 
   page.on('response', (response) => {
-    // console.log(111111, response);
+    // console.log(111111, response.url());
     if (response.url().includes('/data/cbnew/cb_list_new')) {
+      // console.log(22222);
       response.json().then((res) => {
+        // console.log(333333,res.rows);
         const records: NewBitableRecords = [];
 
         res.rows.forEach((row) => {
@@ -46,7 +42,6 @@ test('test', async ({ page, request }) => {
             fields: makeFields(rowData),
           });
         });
-
         execute(request, {
           app_token: process.env.app_token || '',
           table_id: process.env.table_id || '',
