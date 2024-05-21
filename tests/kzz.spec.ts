@@ -27,13 +27,13 @@ test('test', async ({ page, request }) => {
 
   await page.getByRole('button', { name: '登录', exact: true }).click();
 
-  await page.locator('.right-tools tip').nth(0).click();
+  // await page.locator('.right-tools tip').nth(0).click();
   console.log('debug001', page.locator('.right-tools tip').innerHTML());
 
-  await page.locator('tr:has-text("行业") input[type="checkbox"]').nth(0).click();
+  // await page.locator('tr:has-text("行业") input[type="checkbox"]').nth(0).click();
   console.log('debug002', page.locator('tr:has-text("行业") input[type="checkbox"]').innerHTML());
 
-  await page.locator('button:has-text("保存")').click();
+  // await page.locator('button:has-text("保存")').click();
   console.log('debug002', page.locator('button:has-text("保存")').innerHTML());
 
   page.on('response', (response) => {
