@@ -50,6 +50,7 @@ export async function batchCreate(request: APIRequestContext, params: IBatchCrea
       },
     });
   const json = await response.json();
+  console.log(9999, json);
   return json;
 }
 
@@ -151,7 +152,7 @@ export async function execute(request: APIRequestContext, params: Omit<IBatchCre
   };
 
   const targetRecords = params.records;
-  console.log(444444, request, commonOptions, await batchQuery(request, commonOptions));
+  console.log(444444, await batchQuery(request, commonOptions));
   const { data: { items: originRecords, has_more: hasMore, page_token: pageToken } } = await batchQuery(request, commonOptions);
   const aggregatedOriginRecords = [...(originRecords || [])];
 
