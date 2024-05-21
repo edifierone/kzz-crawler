@@ -39,4 +39,5 @@ export interface BitableRecord {
   '到期税前收益': number;
   '到期时间': number; // timestamp
   '债券类型': string;
+  '更新时间': number;
 }

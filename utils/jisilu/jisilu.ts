@@ -241,5 +241,6 @@ export const makeFields = (record: JisiluRecord): BitableRecord => {
     '到期税前收益': record.ytm_rt / 100,
     '到期时间': +new Date(`${record.maturity_dt}`),
     '债券类型': getBondType(record.btype),
+    '更新时间': +new Date(),
   };
 };
