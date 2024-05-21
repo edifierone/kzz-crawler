@@ -10,14 +10,16 @@ test('test', async ({ page, request }) => {
   console.log('app_token', process.env.app_token);
   console.log('table_id', process.env.table_id);
 
-  console.log(22222, process.env);
-
   await page.goto('https://www.jisilu.cn/data/cbnew/#cb');
 
   await page.getByRole('button', { name: '登录' }).click();
   await expect(page).toHaveURL('https://www.jisilu.cn/account/login/');
 
   await page.getByPlaceholder('手机号/用户名').click();
+
+  console.log(4444, page.getByPlaceholder('手机号/用户名'));
+  console.log(5555, await page.getByPlaceholder('手机号/用户名'));
+
 
   await page.getByPlaceholder('手机号/用户名').fill(process.env.JSL_ACCOUNT || '');
 
@@ -27,7 +29,7 @@ test('test', async ({ page, request }) => {
 
   const aaa = page.locator('form:has-text("帐号密码登录 忘记密码 记住我 本人已阅读并同意《用户协议》和《隐私政策》 登录") input[type="checkbox"]');
 
-  console.log(3333, aaa);
+  console.log(3333, aaa.nth(1));
 
   await page.locator('form:has-text("帐号密码登录 忘记密码 记住我 本人已阅读并同意《用户协议》和《隐私政策》 登录") input[type="checkbox"]').nth(1).check();
 
