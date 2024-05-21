@@ -38,38 +38,45 @@ export interface IBatchCreateParams extends ICommonParams {
 export async function batchCreate(request: APIRequestContext, params: IBatchCreateParams) {
   const { token, app_token, table_id, records } = params;
   if (!records || records.length === 0) return { msg: 'no records need to create.' };
-  const response = await request.post(
-    `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_create`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      data: {
-        records,
-      },
-    });
-  const json = await response.json();
-  console.log(9999, json);
-  return json;
+  try {
+    const response = await request.post(
+      `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_create`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        data: {
+          records,
+        },
+      });
+    const json = await response.json();
+    return json; 
+  } catch (error) {
+    return { msg: error }
+  }
 }
 
 export async function batchUpdate(request: APIRequestContext, params: IBatchCreateParams) {
   const { token, app_token, table_id, records } = params;
   if (!records || records.length === 0) return { msg: 'no records need to update.' };
-  const response = await request.post(
-    `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_update`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      data: {
-        records,
-      },
-    });
-  const json = await response.json();
-  return json;
+  try {
+    const response = await request.post(
+      `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_update`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        data: {
+          records,
+        },
+      });
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    return { msg: error }
+  }
 }
 
 export interface IBatchDeleteParams extends ICommonParams {
@@ -79,19 +86,23 @@ export interface IBatchDeleteParams extends ICommonParams {
 export async function batchDelete(request: APIRequestContext, params: IBatchDeleteParams) {
   const { token, app_token, table_id, records } = params;
   if (!records || records.length === 0) return { msg: 'no records need to update.' };
-  const response = await request.post(
-    `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_delete`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      data: {
-        records,
-      },
-    });
-  const json = await response.json();
-  return json;
+  try {
+    const response = await request.post(
+      `https://open.feishu.cn/open-apis/bitable/v1/apps/${app_token}/tables/${table_id}/records/batch_delete`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        data: {
+          records,
+        },
+      });
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    return { msg: error }
+  }
 }
 
 export interface IBatchQueryParams extends ICommonParams {
@@ -152,7 +163,6 @@ export async function execute(request: APIRequestContext, params: Omit<IBatchCre
   };
 
   const targetRecords = params.records;
-  console.log(444444, await batchQuery(request, commonOptions));
   const { data: { items: originRecords, has_more: hasMore, page_token: pageToken } } = await batchQuery(request, commonOptions);
   const aggregatedOriginRecords = [...(originRecords || [])];
 

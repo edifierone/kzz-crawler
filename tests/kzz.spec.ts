@@ -42,7 +42,6 @@ test('test', async ({ page, request }) => {
             fields: makeFields(rowData),
           });
         });
-
         execute(request, {
           app_token: process.env.app_token || '',
           table_id: process.env.table_id || '',
