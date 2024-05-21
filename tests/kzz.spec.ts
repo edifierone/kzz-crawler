@@ -10,6 +10,8 @@ test('test', async ({ page, request }) => {
   console.log('app_token', process.env.app_token);
   console.log('table_id', process.env.table_id);
 
+  console.log(22222, process.env);
+
   await page.goto('https://www.jisilu.cn/data/cbnew/#cb');
 
   await page.getByRole('button', { name: '登录' }).click();
