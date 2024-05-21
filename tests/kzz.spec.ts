@@ -32,7 +32,7 @@ test('test', async ({ page, request }) => {
     if (response.url().includes('/data/cbnew/cb_list_new')) {
       console.log(22222);
       response.json().then((res) => {
-        console.log(333333,res.rows);
+        // console.log(333333,res.rows);
         const records: NewBitableRecords = [];
 
         res.rows.forEach((row) => {
